@@ -1,45 +1,49 @@
 package com.emreakcadag.coroutinesexample
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.emreakcadag.emrex.MainActivityEmrex
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class MainActivity : AppCompatActivity() {
+class NetworkTimeoutActivity : AppCompatActivity() {
+    companion object {
+        private const val TIMEOUT = 5900L
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_network_timeout)
 
         title = TAG
 
         btn_request_1.setOnClickListener {
 
-            // Main, IO, default
+            // Main, IO, Default
             CoroutineScope(IO).launch {
                 fakeApiRequest()
             }
         }
-
-        btn_emrex_module.setOnClickListener {
-            startActivity(Intent(this@MainActivity, MainActivityEmrex::class.java))
-        }
     }
 
     private suspend fun fakeApiRequest() {
-        val result1 = getResult1FromApi()
-        log("$result1")
-        setTextOnMainThread(result1)
+        withContext(IO) {
 
-        val result2 = getResult2FromApi()
-        setTextOnMainThread(result2)
+            val job = withTimeoutOrNull(TIMEOUT) {
+                val result1 = getResult1FromApi()
+                log("result #1: $result1")
+                setTextOnMainThread(result1)
+
+                val result2 = getResult2FromApi()
+                log("result #2: $result2")
+                setTextOnMainThread(result2)
+            }.takeIf { it == null }.run {
+                log("TIMEOUT")
+                setTextOnMainThread("timeout")
+            }
+
+        }
     }
 
     private suspend fun getResult1FromApi(): String? {
@@ -57,11 +61,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun logThread(methodName: String) {
-        log("$methodName: ${Thread.currentThread().name}")
+        Log.d(this@NetworkTimeoutActivity.TAG, "$methodName: ${Thread.currentThread().name}")
     }
 
     private suspend fun setTextOnMainThread(input: String?) {
-        withContext(Main) {
+        withContext(Dispatchers.Main) {
             textView.text = input
         }
     }

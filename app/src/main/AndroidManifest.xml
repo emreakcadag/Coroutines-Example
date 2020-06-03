@@ -9,13 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SupervisorJobActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ConcurrencyErrorHandlingExceptionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".GlobalScopeActivity" />
+        <activity android:name=".RunBlockingActivity" />
+        <activity android:name=".FreezeUiActivity" />
+        <activity android:name=".SequentialTasksActivity" />
+        <activity android:name=".ParallelTasksASYNCAwaitActivity" />
+        <activity android:name=".StartCancelJobActivity" />
+        <activity android:name=".NetworkTimeoutActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

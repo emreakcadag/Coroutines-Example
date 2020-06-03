@@ -4,35 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ParallelTasksASYNCAwaitActivity">
 
     <Button
-        android:id="@+id/btn_request_1"
+        android:id="@+id/btn_start_parallel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send request 1 - 2"
+        android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_parallel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_request_1" />
-
-    <Button
-        android:id="@+id/btn_emrex_module"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go another module"
-        app:layout_constraintBottom_toTopOf="@+id/btn_request_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_start_parallel" />
 </androidx.constraintlayout.widget.ConstraintLayout>
